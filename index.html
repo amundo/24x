@@ -52,13 +52,13 @@ figure {
 
 <script>
 fetch('toSB.json')
-  .then( response => response.json() )
+  .then( function(response) { return response.json() })
   .then( getNextBus )
 
 function getNextBus(times){
   var ucsb = times.map(time => time.UCSB);
 
-  times.map( time =>  {
+  times.map( function(time){
     var deltas = ucsb.map(function(time){ 
       return moment(time, 'hh:mm').fromNow() 
     });

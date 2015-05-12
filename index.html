@@ -44,7 +44,7 @@ figure {
 
 </head>
 <body>
-<figure><img src=img/24X_UCSB.png></figure>
+<figure><img src=24X_UCSB.png></figure>
 <h1></h1>
 
 <script src=js/fetch.js> </script>
@@ -52,13 +52,13 @@ figure {
 
 <script>
 fetch('toSB.json')
-  .then( response => response.json() )
+  .then( function(response) { return response.json() })
   .then( getNextBus )
 
 function getNextBus(times){
   var ucsb = times.map(time => time.UCSB);
 
-  times.map( time =>  {
+  times.map( function(time){
     var deltas = ucsb.map(function(time){ 
       return moment(time, 'hh:mm').fromNow() 
     });

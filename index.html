@@ -47,7 +47,8 @@ figure {
 <figure><img src=img/24X_UCSB.png></figure>
 <h1></h1>
 
-<script src=js/moment.min.js> </script>
+<script src=js/fetch.js> </script>
+<script src=js/moment.min.js> </script> 
 
 <script>
 fetch('toSB.json')
@@ -58,9 +59,16 @@ function getNextBus(times){
   var ucsb = times.map(time => time.UCSB);
 
   times.map( time =>  {
-    var deltas = ucsb.map(time => moment(time, 'hh:mm').fromNow());
-    var futures = deltas.filter(delta => !(delta.contains('ago')));
+    var deltas = ucsb.map(function(time){ 
+      return moment(time, 'hh:mm').fromNow() 
+    });
+
+    var futures = deltas.filter(function(delta){
+      return !(delta.contains('ago'))
+    });
+ 
     var next = futures[0];
+
     document.body.querySelector('h1').innerHTML = next;
   })
 }

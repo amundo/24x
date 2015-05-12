@@ -56,7 +56,7 @@ fetch('toSB.json')
   .then( getNextBus )
 
 function getNextBus(times){
-  var ucsb = times.map(time => time.UCSB);
+  var ucsb = times.map(function(time){ return time.UCSB});
 
   times.map( function(time){
     var deltas = ucsb.map(function(time){ 

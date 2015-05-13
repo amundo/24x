@@ -3,7 +3,7 @@
 <head>
   <meta charset=utf-8>
   <title>
-24X @ UCSB  
+    24X @ UCSB
   </title>
   <style>
 
@@ -25,11 +25,12 @@ html {
   html { font-size: 25px; } 
 }
 
-html { 
+html {
+  height: 100vh;
   min-height: 100vh;
 }
 
-body { 
+body {
   min-height: 100vh;
   text-align:center;
   background-image: linear-gradient(blanchedalmond, turquoise);
@@ -38,16 +39,16 @@ body {
   flex-direction:column;
   justify-content:space-around;
   align-items:center;
-}  
+}
 
-h1 { 
+h1 {
   font-family: 'Impact';
   font-size: 3rem;
   vertical-align:center;
   flex:1;
 }
 
-figure { 
+figure {
   flex: 1;
   display:flex;
   justify-content: center;
@@ -62,29 +63,48 @@ figure {
 <h1></h1>
 
 <script src=js/fetch.js> </script>
-<script src=js/moment.min.js> </script> 
+<script src=js/moment.min.js> </script>
 
 <script>
 fetch('toSB.json')
-  .then( function(response) { return response.json() })
-  .then( getNextBus )
+  .then(function (response) { return response.json(); })
+  .then(getNextBus);
 
 function getNextBus(times){
-  var ucsb = times.map(function(time){ return time.UCSB});
+  var amFlag = true,
+      prevTime = moment("00:00", "HH:mm"),
+      currTime;
 
-  times.map( function(time){
-    var deltas = ucsb.map(function(time){ 
-      return moment(time, 'hh:mm').fromNow() 
+  var ucsb = times.map(function (time) {
+    currTime = moment(time.UCSB, "HH:mm");
+    if (amFlag) {
+      if (currTime < prevTime) {
+        amFlag = false;
+        return currTime.add(12, 'hours');
+      } else {
+        prevTime = currTime;
+      }
+      return currTime;
+    } else {
+      return currTime.add(12, 'hours');
+    }
+  });
+
+  ucsb.filter(function (el) { return el !== undefined });
+
+  // times.map(function (time) {
+    var deltas = ucsb.map(function (time) {
+      return moment(time, 'HH:mm').fromNow();
     });
 
-    var futures = deltas.filter(function(delta){
-      return delta.indexOf('ago') == -1
+    var futures = deltas.filter(function (delta) {
+      return delta.indexOf('ago') == -1;
     });
- 
+
     var next = futures[0];
 
     document.body.querySelector('h1').innerHTML = next;
-  })
+  // });
 }
 
 </script>

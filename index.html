@@ -22,20 +22,20 @@ body {
   background-image: linear-gradient(blanchedalmond, turquoise);
   display: flex;
   padding: 1em;
-  flex-direction:column;
-  justify-content:space-around;
-  align-items:center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 h1 {
   font-family: 'Impact';
-  vertical-align:center;
+  vertical-align: center;
   flex:1;
 }
 
 figure {
   flex: 1;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -75,21 +75,19 @@ function getNextBus(times){
     }
   });
 
-  ucsb.filter(function (el) { return el !== undefined });
+  ucsb.filter(function (el) { return el !== undefined; });
 
-  // times.map(function (time) {
-    var deltas = ucsb.map(function (time) {
-      return moment(time, 'HH:mm').fromNow();
-    });
+  var deltas = ucsb.map(function (time) {
+    return moment(time, 'HH:mm').fromNow();
+  });
 
-    var futures = deltas.filter(function (delta) {
-      return delta.indexOf('ago') == -1;
-    });
+  var futures = deltas.filter(function (delta) {
+    return delta.indexOf('ago') == -1;
+  });
 
-    var next = futures[0];
+  var next = futures[0];
 
-    document.body.querySelector('h1').innerHTML = next;
-  // });
+  document.body.querySelector('h1').innerHTML = next;
 }
 
 </script>

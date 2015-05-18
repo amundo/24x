@@ -65,47 +65,10 @@ figure {
 <script src=js/fetch.js> </script>
 <script src=js/moment.min.js> </script>
 
-<script>
-fetch('toSB.json')
-  .then(function (response) { return response.json(); })
-  .then(getNextBus);
 
-function getNextBus(times){
-  var amFlag = true,
-      prevTime = moment("00:00", "HH:mm"),
-      currTime;
+<h1><a href=sb/>@ Transit Center</a></h1>
+<h1><a href=uc/>@ UCSB</a></h1>
 
-  var ucsb = times.map(function (time) {
-    currTime = moment(time.UCSB, "HH:mm");
-    if (amFlag) {
-      if (currTime < prevTime) {
-        amFlag = false;
-        return currTime.add(12, 'hours');
-      } else {
-        prevTime = currTime;
-      }
-      return currTime;
-    } else {
-      return currTime.add(12, 'hours');
-    }
-  });
-
-  ucsb.filter(function (el) { return el !== undefined });
-
-  // times.map(function (time) {
-    var deltas = ucsb.map(function (time) {
-      return moment(time, 'HH:mm').fromNow();
-    });
-
-    var futures = deltas.filter(function (delta) {
-      return delta.indexOf('ago') == -1;
-    });
-
-    var next = futures[0];
-
-    document.body.querySelector('h1').innerHTML = next;
-  // });
-}
 
 </script>
 </body>
